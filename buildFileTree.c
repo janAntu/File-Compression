@@ -1,0 +1,71 @@
+/*
+ * Filename: buildFileTree.c
+ * Author: Richard Andrus
+ * Userid: cs30foy
+ * Description: 
+ * Date: Nov 22 2018
+ * Sources of Help: tutorialspoint.com
+ */
+
+/*
+ * Function Name: buildFileTree()
+ * Function Prototype: void buildFileTree(const mode_t mode);
+ * Description: Prints file permissions (read, write, execute)
+ * Parameters: mode - A bitfield representing access permissions
+ * Side Effects: Prints out to stdout
+ * Error Conditions: exe
+ * Return Value: exe
+ *
+ */
+
+#include "pa4.h"
+#include "pa4Strings.h"
+#include <stdio.h>
+#include <sys/stat.h>
+
+void buildFileTree(const mode_t mode) {
+
+  // Check whether this file is a directory
+  if (mode & S_IFDIR != 0) {
+
+    fprintf(stdout, D_PERMISSION);
+
+  }
+
+  // These bit flags help determine whether each bit of
+  // mode is full or empty and whether each bit is
+  // a read, write or execute bit
+  unsigned short flag = S_IRUSR;
+  unsigned short readBits = S_IRUSR | S_IRGRP | S_IROTH;
+  unsigned short writeBits = S_IWUSR | S_IWGRP | S_IWOTH;
+  unsigned short exeBits = S_IXUSR | S_IXGRP | S_IXOTH;
+
+  // Loop through each bit of the bitfield
+  for (; flag > 0; flag = flag >> 1) {
+
+    // Check if the specified bit is zero
+    if (mode & flag == 0) {
+
+      // Print out a '-' for no permission
+      fprintf(stdout, NO_PERMISSION);
+
+    } else if (flag & readBits > 0) {
+
+      // Print out a 'r' for read permission
+      fprintf(stdout, R_PERMISSION);
+
+    } else if (flag &  writeBits) {
+
+      // Print out a 'w' for write permission
+      fprintf(stdout, W_PERMISSION);
+
+    } else if (flag & exeBits) {
+
+      // Print out a 'x' for execute permission
+      fprintf(stdout, X_PERMISSION);
+
+    }
+
+  }
+
+}

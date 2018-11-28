@@ -32,6 +32,7 @@
  * Registers Used: 
  *	r0 - arg 1 -- input fileinfo p1
  *	r1 - arg 2 -- input fileinfo p2
+ *  r2 - holds value of time offset
  *
  */
 timeCompareRev:
@@ -42,12 +43,18 @@ timeCompareRev:
     str r0, [fp, P1_OFFSET]
     str r1, [fp, P2_OFFSET]
 
+    @ Store time offset to r2
+    ldr r2, =offset_time
+    ldr r2, [r2]
+
 if:
     @ Call strcmp on two times
     ldr r0, [fp, P1_OFFSET]
-    ldr r0, [r0, =offset_time]     @ get 1st time into r0
+    ldr r0, [r0]
+    ldr r0, [r0, r2]     @ get 1st time into r0
     ldr r1, [fp, P2_OFFSET]
-    ldr r1, [r1, =offset_time]     @ get 2nd time into r1
+    ldr r1, [r1]
+    ldr r1, [r1, r2]     @ get 2nd time into r1
 
     @ check if first < second
     cmp r0, r1
@@ -60,9 +67,11 @@ if:
 else_if:
     @ Call strcmp on two times
     ldr r0, [fp, P1_OFFSET]
-    ldr r0, [r0, =offset_time]     @ get 1st time into r0    
+    ldr r0, [r0]
+    ldr r0, [r0, r2]     @ get 1st time into r0    
     ldr r1, [fp, P2_OFFSET]
-    ldr r1, [r1, =offset_time]     @ get 2nd time into r1
+    ldr r1, [r1]
+    ldr r1, [r1, r2]     @ get 2nd time into r1
 
     @ check if first > second
     cmp r0, r1
@@ -81,3 +90,4 @@ end_if:
 
     @ Restore caller's registers
     pop {fp, pc}
+

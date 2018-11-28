@@ -105,6 +105,16 @@ testnameCompareRev: test.h pa4.h nameCompareRev.o testnameCompare.o
 	gcc -g -o testnameCompare testnameCompare.c nameCompareRev.s
 	@echo "Done."
 
+testtimeCompare: test.h pa4.h timeCompare.o testtimeCompare.o pa4Globals.c
+	@echo "Compiling testtimeCompare.c"
+	gcc -g -o testtimeCompare testtimeCompare.c timeCompare.s pa4Globals.c
+	@echo "Done."
+
+testtimeCompareRev: test.h pa4.h timeCompareRev.o testtimeCompareRev.o pa4Globals.c
+	@echo "Compiling testtimeCompareRev.c"
+	gcc -g -o testtimeCompareRev testtimeCompareRev.c timeCompareRev.s pa4Globals.c
+	@echo "Done."
+
 #####################################################################
 #           End of student section. Add your rules above.           #
 #####################################################################

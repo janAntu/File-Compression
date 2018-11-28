@@ -1,8 +1,8 @@
 /*
- * time: testtimeCompare
+ * time: testtimeCompareRev
  * Author: Richard Andrus
  * Userid: cs30foy
- * Description: Unit test program to test the function timeCompare()
+ * Description: Unit test program to test the function timeCompareRev()
  * Date: Nov 8 2018
  * Sources of Help: tutorialspoint.com
  */
@@ -15,12 +15,12 @@
 #include "pa4.h"
 
 /*
- * Unit Test for timeCompare.s
+ * Unit Test for timeCompareRev.s
  *
- * long timeCompare( char * src );
+ * long timeCompareRev( char * src );
  *
  */
-void testtimeCompare() {
+void testtimeCompareRev() {
   
   // Create two  fileInfo structs to compare
   struct fileInfo *file1 = malloc(sizeof(struct fileInfo));
@@ -29,16 +29,16 @@ void testtimeCompare() {
   /* Test equal times */
   file1->time = 10;
   file2->time = 10;
-  TEST( timeCompare(&file1, &file2) == 0 );
+  TEST( timeCompareRev(&file1, &file2) == 0 );
   
   /* Test where p1 comes before p2 */
   file1->time--;
-  TEST( timeCompare(&file1, &file2) == -1 );
+  TEST( timeCompareRev(&file1, &file2) == 1 );
   
   /* Test where p2 comes before p1 */
   file1->time++;
   file2->time--;
-  TEST( timeCompare(&file1, &file2) == 1 );
+  TEST( timeCompareRev(&file1, &file2) == -1 );
 
   // Free allocated memory
   free(file1);
@@ -47,8 +47,8 @@ void testtimeCompare() {
 }
 
 int main() {
-  fprintf( stderr, "Testing timeCompare...\n\n" );
-  testtimeCompare();
+  fprintf( stderr, "Testing timeCompareRev...\n\n" );
+  testtimeCompareRev();
   fprintf( stderr, "\nDone running tests.\n" );
   return 0;
 }
