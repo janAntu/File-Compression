@@ -2,19 +2,22 @@
  * Filename: buildFileTree.c
  * Author: Richard Andrus
  * Userid: cs30foy
- * Description: 
+ * Description: Builds the file tree struct for a file
  * Date: Nov 22 2018
  * Sources of Help: tutorialspoint.com
  */
 
 /*
  * Function Name: buildFileTree()
- * Function Prototype: void buildFileTree(const mode_t mode);
- * Description: Prints file permissions (read, write, execute)
- * Parameters: mode - A bitfield representing access permissions
- * Side Effects: Prints out to stdout
- * Error Conditions: exe
- * Return Value: exe
+ * Function Prototype: struct fileInfo *buildFileTree(
+ *                     const char *filename, SortBy sortby, int rev);
+ * Description: Builds the file tree struct for a file
+ * Parameters: filename - Name of the file
+ *             sortby - Criteria to sort the files, either name or date
+ *             rev - Tells whether to sort in reverse order
+ * Side Effects: Allocates memory on the heap
+ * Error Conditions: 
+ * Return Value: Pointer to dynamically allocated struct fileInfo
  *
  */
 
@@ -22,50 +25,143 @@
 #include "pa4Strings.h"
 #include <stdio.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <dirent.h>
 
-void buildFileTree(const mode_t mode) {
+struct fileInfo *buildFileTree(
+    const char *filename, SortBy sortby, int rev) {
 
-  // Check whether this file is a directory
-  if (mode & S_IFDIR != 0) {
+  /*
+   * 1. Dynamically allocate space for one struct fileInfo
+   */
 
-    fprintf(stdout, D_PERMISSION);
+  struct fileInfo *fInfo = calloc(1, sizeof(struct fileInfo));
+
+  // Check if memory allocation failed; if so, print error
+  if (fInfo == NULL) {
+
+    perror(__func__);
+    return NULL;
 
   }
 
-  // These bit flags help determine whether each bit of
-  // mode is full or empty and whether each bit is
-  // a read, write or execute bit
-  unsigned short flag = S_IRUSR;
-  unsigned short readBits = S_IRUSR | S_IRGRP | S_IROTH;
-  unsigned short writeBits = S_IWUSR | S_IWGRP | S_IWOTH;
-  unsigned short exeBits = S_IXUSR | S_IXGRP | S_IXOTH;
+  /*
+   * 2. Call getFileInfo on this new struct to fill fields
+   */
 
-  // Loop through each bit of the bitfield
-  for (; flag > 0; flag = flag >> 1) {
+  getFileInfo(fInfo, filename);
 
-    // Check if the specified bit is zero
-    if (mode & flag == 0) {
+  /*
+   * 3. Determine if file is a directory and set corresponding flag
+   */
 
-      // Print out a '-' for no permission
-      fprintf(stdout, NO_PERMISSION);
+  DIR *dir = opendir(filename);
+  if (dir != NULL) {
 
-    } else if (flag & readBits > 0) {
+    fInfo->isDir = TRUE;
 
-      // Print out a 'r' for read permission
-      fprintf(stdout, R_PERMISSION);
+    /*
+     * 4. If file is directory, recursively allocate each of its
+     *    children using buildDir, creating a tree data structure.
+     */
 
-    } else if (flag &  writeBits) {
+    // Allocate memory for children array
+    fInfo->children = calloc(
+      fInfo->childrenCapacity, sizeof(struct fileInfo*));
 
-      // Print out a 'w' for write permission
-      fprintf(stdout, W_PERMISSION);
+    // Use readdir to read each subfile
+    struct dirent *entry;
+    while ((entry = readdir(dir)) != NULL) {
 
-    } else if (flag & exeBits) {
+      // If subfile name is "." or "..", skip
+      if (strcmp(entry->d_name, STR_THIS) != 0 &&
+          strcmp(entry->d_name, STR_UP) != 0) {
 
-      // Print out a 'x' for execute permission
-      fprintf(stdout, X_PERMISSION);
+        // Concatenate the directory name with the
+        // subfile's name
+        char catName[MAXLEN];
+        sprintf(catName, FILE_CONCAT_FORMAT, 
+          filename, entry->d_name);
+
+        // If there are more children than there is
+        // capacity, expand children array with realloc
+        if (fInfo->childrenSize >= 
+            fInfo->childrenCapacity) {
+
+         struct fileInfo **temp  = realloc(fInfo->children, 
+            sizeof(struct fileInfo*) *
+            (fInfo->childrenSize + CHILDREN_INCREMENT));
+
+          // If realloc fails, print
+          // error, free everything
+          // and return NULL.
+          if (temp == NULL) {
+
+            perror(__func__);
+            if (fInfo->children != NULL) 
+              free(fInfo->children);
+            free(fInfo);
+            return(NULL);
+
+          // Otherwise, update childrenCapacity
+          } else {
+
+            fInfo->children = temp;
+            fInfo->childrenCapacity += CHILDREN_INCREMENT;
+
+          }
+
+        }
+
+        // Call buildFileTree with concatenated
+        // string and store result to appropriate
+        // location in the children array
+        fInfo->children[fInfo->childrenSize] =
+          buildFileTree(catName, sortby, rev);
+        if (fInfo->children[fInfo->childrenSize] == NULL) {
+          return NULL;
+        }
+
+        // Increment childrenSize
+        fInfo->childrenSize++;
+
+      }
 
     }
 
+    // Close the directory
+    closedir(dir);
+
+    // Sort the files in order using qsort, using
+    // sortBy and rev to determine the sorting method
+    void *sort;
+    if (sortby == NAME) {
+
+      if (rev == TRUE) {
+
+        sort = nameCompareRev;
+
+      } else {
+
+        sort = nameCompare;
+
+      }
+
+    } else if (rev == TRUE) {
+
+      sort = timeCompareRev;
+
+    } else {
+
+      sort = timeCompare;
+
+    }
+
+    qsort(fInfo->children, fInfo->childrenSize, 
+          sizeof(struct fileInfo*), sort);
+
   }
+
+  return fInfo;
 
 }

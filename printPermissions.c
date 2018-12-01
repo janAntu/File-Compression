@@ -26,9 +26,13 @@
 void printPermissions(const mode_t mode) {
 
   // Check whether this file is a directory
-  if (mode & S_IFDIR != 0) {
+  if (S_ISDIR(mode) != 0) {
 
     fprintf(stdout, D_PERMISSION);
+
+  } else {
+
+    fprintf(stdout, NO_PERMISSION);
 
   }
 
@@ -44,12 +48,12 @@ void printPermissions(const mode_t mode) {
   for (; flag > 0; flag = flag >> 1) {
 
     // Check if the specified bit is zero
-    if (mode & flag == 0) {
+    if ((mode & flag) == 0) {
 
       // Print out a '-' for no permission
       fprintf(stdout, NO_PERMISSION);
 
-    } else if (flag & readBits > 0) {
+    } else if ((flag & readBits) > 0) {
 
       // Print out a 'r' for read permission
       fprintf(stdout, R_PERMISSION);
