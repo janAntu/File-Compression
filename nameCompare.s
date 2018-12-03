@@ -39,14 +39,14 @@ nameCompare:
     push {fp, lr}
 
     @ Translation #1: Assembly to Machine Instruction: ADD
-    add fp, sp, FP_OFFSET
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ add fp, sp, FP_OFFSET
+    .word 0xE28DB004
 
     sub sp, sp, PARAM_SPACE
 
     @ Translation #2: Assembly to Machine Instruction: STR
-    str r0, [fp, P1_OFFSET]
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ str r0, [fp, P1_OFFSET]
+    .word 0xE50B0008
 
     str r1, [fp, P2_OFFSET]
 
@@ -54,8 +54,8 @@ if:
     @ Call strcmp on two names
 
     @ Translation #3: Assembly to Machine Instruction: LDR
-    ldr r0, [fp, P1_OFFSET]
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ ldr r0, [fp, P1_OFFSET]
+    .word 0xE51B0008
 
     ldr r0, [r0]                 @ get 1st name into r0
     ldr r1, [fp, P2_OFFSET]
@@ -65,8 +65,8 @@ if:
     @ strcmp returned value < 0, first < second
     cmp r0, 0
     @ Translation #4: Assembly to Machine Instruction: BGE
-    bge else_if
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ bge else_if
+    .word 0xAA000001
 
     @ return -1
     mov r0, -1
@@ -84,8 +84,8 @@ else_if:
     cmp r0, 0
 
     @ Translation #5: Assembly to Machine Instruction: BLE
-    ble else
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ ble else
+    .word 0xDA000001
 
     @ return 1
     mov r0, 1
@@ -97,8 +97,8 @@ else:
 
 end_if:
     @ Translation #6: Assembly to Machine Instruction: SUB
-    sub sp, fp, FP_OFFSET
-    @ .word 0x________  @ TODO: Replace above ARM code with machine instruction.
+    @ sub sp, fp, FP_OFFSET
+    .word 0xE24BD004
 
     @ Restore caller's registers
     pop {fp, pc}
