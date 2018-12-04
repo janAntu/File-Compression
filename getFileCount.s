@@ -69,6 +69,16 @@ for:
     ldr r3, =offset_children
     ldr r3, [r3]
     ldr r0, [r0, r3]
+    
+    ldr r2, [fp, INDEX_OFF]
+    mul r2, r2, INT_SIZE
+    add r0, r0, r2
+
+    bl getFileCount
+    ldr r1, [fp, COUNTER_OFF]
+    add r1, r1, r0
+    str r1, [fp, COUNTER_OFF]
+
 
 
 
