@@ -11,9 +11,11 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <string.h>
+#include <getopt.h>
+#include <unistd.h>
+
 #include "pa4.h"
 #include "pa4Strings.h"
-#include <getopt.h>
 
 /*
  * Function Name: main
@@ -35,29 +37,55 @@ int main( int argc, char *argv[] ) {
    * 1. Parse Command Line Arguments using getopt
    */
 
-  int opt;
-  FILE *infile;
+  // Keep track of which flags are set
+  char allFlag = FALSE;
+  char countFlag = FALSE;
+  char fFlag = FALSE;
+  char longFlag = FALSE;
+  char revFlag = FALSE;
+  sortBy sortby = NAME;
+  char directory[MAXLEN];
 
-  while ((opt = getopt(
-    argc, argv, FLAGS)) != -1) {
+  // Set default path to "."
+  strcpy(directory, STR_THIS);
+
+  // Cycle through each get_opt flag
+  int opt;
+  while ((opt = getopt(argc, argv, FLAGS)) != -1) {
   
     switch (opt) {
 
-      case HELP_FLAG:
-        fprintf(stderr, STR_USAGE);
+      case FLAG_HELP:
+        fprintf(stdout, STR_USAGE);
         return EXIT_SUCCESS;
 
-      case INFILE_FLAG:
-        errno = 0;
-        infile = fopen(optarg, "r");
-        if (errno > 0 || infile == NULL) {
+      case FLAG_SHOWHIDDEN:
+        allFlag = TRUE;
+        break;
 
-          // Print error message
-          perror(RTABLE_FILE_ERR);
-          fprintf(stderr, STR_USAGE);
-          return EXIT_FAILURE;
+      case FLAG_COUNT:
+        countFlag = TRUE;
+        break;
 
-        }
+      case FLAG_LONGFMT:
+        longFlag = TRUE;
+        break;
+
+      case FLAG_REVERSE:
+        rev = TRUE;
+        break;
+
+      case FLAG_TIME:
+        sortby = TIME;
+        break;
+
+      case FLAG_FILENAME:
+        strcpy(directory, optarg);
+        break;
+
+      case FLAG_UNKNOWN:
+        fprintf(stderr, STR_USAGE);
+        return EXIT_FAILURE;
         break;
 
       default:
@@ -68,68 +96,53 @@ int main( int argc, char *argv[] ) {
 
   }
 
-  // If infile isn't initiated, print error and return
-  if (infile == NULL) {
+  /*
+   * 2. Check if the file exists using access
+   */
+  
+  if (access(directory, F_OK) != 0) {
 
-    fprintf(stderr, MISSING_INFILE);
-    fprintf(stderr, STR_USAGE);
+    // If file doesn't exists, print error and return
+    fprintf(stderr, ERR_DNE);
     return EXIT_FAILURE;
 
   }
   
-  // If there are extra arguments, print an error and return
-  if (optind < argc) {
+  /*
+   * 3. Construct the filetree by using buildFileTree
+   */
 
-    fprintf(stderr, EXTRA_ARGS, argv[0]);
-    fprintf(stderr, STR_USAGE);
-    fclose(infile);
+  struct fileInfo *root = buildFileTree(directory, sortby, rev);
+
+  // Check if buildFileTree failed
+  if (root == NULL) {
+
     return EXIT_FAILURE;
 
   }
 
   /*
-   * 2. Build the hashtables of email data using populateTables
+   * 4. If specified, print the filecount
    */
+  
+  if (countFlag == TRUE) {
 
-  table_t *htbl = (void*) malloc(sizeof(htbl));
-  table_t *rtbl = (void*) malloc(sizeof(htbl));
-  table_t *eotbl = (void*) malloc(sizeof(eotbl));
+    `fprintf(stdout, STR_COUNT, directory, getFileCount(root));
 
-  // Check if dynamic memory allocation failed
-  if (htbl == NULL || rtbl == NULL || eotbl == NULL) {
-    free(htbl);
-    free(rtbl);
-    free(eotbl);
-    perror(MEM_ERR);
-    fprintf(stderr, STR_USAGE);
-    return EXIT_FAILURE;
   }
 
-  // Read data from infile to each table
-  readTables(infile, htbl, rtbl, eotbl);
-
   /*
-   * 3. Serialize hashtables to file using writeTables
+   * 5. Call printFiles to display the data structure
    */
 
-  launchUserQuery(htbl, rtbl, eotbl); 
+  printFiles(root, allFlag, longFlag, 0);
 
   /*
-   * 4. Free all dynamically allocated memory
+   * 6. Free the entire data structure using freeFileTree
    */
 
-  fclose(infile);
+  freeFileTree(root);
 
-  free(htbl->bitArray);
-  free(rtbl->bitArray);
-
-  for (int i = 0; i < eotbl->size; i++) {
-    freeLinkedList(eotbl->llArray[i]);
-  }
-
-  free(htbl);
-  free(rtbl);
-  free(eotbl);
   return EXIT_SUCCESS;
-  
+
 }
