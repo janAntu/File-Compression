@@ -45,11 +45,11 @@ getFileCount:
     add fp, sp, FP_OFFSET
     sub sp, sp, PARAM_SPACE 
     sub sp, sp, LOCAL_SPACE
-    str r0, [fp, PARAM_OFF]
+    str r0, [fp, PARAM_OFFSET]
 
     @ int counter = 0
     mov r1, 0
-    str r1, [fp, COUNTER_OFF]
+    str r1, [fp, COUNTER_OFFSET]
 
     @ for (int i = 0; i < fi->childrenSize; i++) {
     mov r2, 0
@@ -57,7 +57,7 @@ getFileCount:
 
     ldr r3, =offset_childrenSize
     ldr r3, [r3]
-    ldr r0, [fp, PARAM_OFF]
+    ldr r0, [fp, PARAM_OFFSET]
     ldr r0, [r0, r3]
     cmp r2, r0
     bge endfor
@@ -65,23 +65,20 @@ getFileCount:
 for:
 
     @ counter += getFileCount(fi->children[i])
-    ldr r0, [fp, PARAM_OFF]
+    ldr r0, [fp, PARAM_OFFSET]
     ldr r3, =offset_children
     ldr r3, [r3]
     ldr r0, [r0, r3]
     
-    ldr r2, [fp, INDEX_OFF]
-    mul r2, r2, INT_SIZE
+    ldr r2, [fp, INDEX_OFFSET]
+    mov r1, INT_SIZE
+    mul r2, r2, r1
     add r0, r0, r2
 
     bl getFileCount
-    ldr r1, [fp, COUNTER_OFF]
+    ldr r1, [fp, COUNTER_OFFSET]
     add r1, r1, r0
-    str r1, [fp, COUNTER_OFF]
-
-
-
-
+    str r1, [fp, COUNTER_OFFSET]
 
     ldr r2, [fp, INDEX_OFFSET]
     add r2, r2, 1
@@ -89,7 +86,7 @@ for:
 
     ldr r3, =offset_childrenSize
     ldr r3, [r3]
-    ldr r0, [fp, PARAM_OFF]
+    ldr r0, [fp, PARAM_OFFSET]
     ldr r0, [r0, r3]
     cmp r2, r0
     blt for

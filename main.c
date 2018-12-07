@@ -40,10 +40,9 @@ int main( int argc, char *argv[] ) {
   // Keep track of which flags are set
   char allFlag = FALSE;
   char countFlag = FALSE;
-  char fFlag = FALSE;
   char longFlag = FALSE;
-  char revFlag = FALSE;
-  sortBy sortby = NAME;
+  char rev = FALSE;
+  SortBy sortby = NAME;
   char directory[MAXLEN];
 
   // Set default path to "."
@@ -56,7 +55,7 @@ int main( int argc, char *argv[] ) {
     switch (opt) {
 
       case FLAG_HELP:
-        fprintf(stdout, STR_USAGE);
+        fprintf(stdout, STR_USAGE, argv[0]);
         return EXIT_SUCCESS;
 
       case FLAG_SHOWHIDDEN:
@@ -84,12 +83,12 @@ int main( int argc, char *argv[] ) {
         break;
 
       case FLAG_UNKNOWN:
-        fprintf(stderr, STR_USAGE);
+        fprintf(stderr, STR_USAGE, argv[0]);
         return EXIT_FAILURE;
         break;
 
       default:
-        fprintf(stderr, STR_USAGE);
+        fprintf(stderr, STR_USAGE, argv[0]);
         return EXIT_FAILURE;
 
     }
@@ -103,7 +102,7 @@ int main( int argc, char *argv[] ) {
   if (access(directory, F_OK) != 0) {
 
     // If file doesn't exists, print error and return
-    fprintf(stderr, ERR_DNE);
+    fprintf(stderr, ERR_DNE, directory);
     return EXIT_FAILURE;
 
   }
@@ -127,7 +126,7 @@ int main( int argc, char *argv[] ) {
   
   if (countFlag == TRUE) {
 
-    `fprintf(stdout, STR_COUNT, directory, getFileCount(root));
+    fprintf(stdout, STR_COUNT, directory, getFileCount(root));
 
   }
 
