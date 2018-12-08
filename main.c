@@ -55,7 +55,7 @@ int main( int argc, char *argv[] ) {
     switch (opt) {
 
       case FLAG_HELP:
-        fprintf(stdout, STR_USAGE, argv[0]);
+        fprintf(stderr, STR_USAGE, argv[0]);
         return EXIT_SUCCESS;
 
       case FLAG_SHOWHIDDEN:
@@ -96,7 +96,19 @@ int main( int argc, char *argv[] ) {
   }
 
   /*
-   * 2. Check if the file exists using access
+   * 2. Check for any extra arguments
+   */
+
+  if (optind != argc) {
+
+    fprintf(stderr, STR_EXTRA_ARG, argv[optind]);
+    fprintf(stderr, STR_USAGE, argv[0]);
+    return EXIT_FAILURE;
+
+  }
+
+  /*
+   * 3. Check if the file exists using access
    */
   
   if (access(directory, F_OK) != 0) {
@@ -108,7 +120,7 @@ int main( int argc, char *argv[] ) {
   }
   
   /*
-   * 3. Construct the filetree by using buildFileTree
+   * 4. Construct the filetree by using buildFileTree
    */
 
   struct fileInfo *root = buildFileTree(directory, sortby, rev);
@@ -121,7 +133,7 @@ int main( int argc, char *argv[] ) {
   }
 
   /*
-   * 4. If specified, print the filecount
+   * 5. If specified, print the filecount
    */
   
   if (countFlag == TRUE) {
@@ -131,13 +143,13 @@ int main( int argc, char *argv[] ) {
   }
 
   /*
-   * 5. Call printFiles to display the data structure
+   * 6. Call printFiles to display the data structure
    */
 
   printFiles(root, allFlag, longFlag, 0);
 
   /*
-   * 6. Free the entire data structure using freeFileTree
+   * 7. Free the entire data structure using freeFileTree
    */
 
   freeFileTree(root);
