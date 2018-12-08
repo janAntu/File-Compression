@@ -100,24 +100,7 @@ EC: $(OBJS)
 #        Beginning of student section. Add your rules below.        #
 #####################################################################
 
-testnameCompareRev: test.h pa4.h nameCompareRev.o testnameCompare.o
-	@echo "Compiling testnameCompareRev.c"
-	gcc -g -o testnameCompare testnameCompare.c nameCompareRev.s
-	@echo "Done."
 
-testtimeCompareRev: test.h pa4.h timeCompareRev.o \
-	testtimeCompareRev.o pa4Globals.c
-	@echo "Compiling testtimeCompareRev.c"
-	gcc -g -o testtimeCompareRev testtimeCompareRev.c \
-	timeCompareRev.s pa4Globals.c
-	@echo "Done."
-
-testMilestone: testMilestone.c buildFileTree.c printPermissions.c
-	@echo "Compiling testtimeCompareRev.c"
-	gcc -g -o testMilestone testMilestone.c printPermissions.c buildFileTree.c \
-	getFileInfo.c nameCompareRev.s nameCompare.s timeCompareRev.s \
-	timeCompare.s pa4Globals.c
-	@echo "Done."
 
 #####################################################################
 #           End of student section. Add your rules above.           #

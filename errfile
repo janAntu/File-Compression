@@ -1,0 +1,4 @@
+Making extra credit executable...
+gcc -o 'mylsEC' -g -Wall -std=c99 pa4.h pa4EC.h mainEC.c buildFileTree.o timeCompareRev.o pa4Globals.o printFiles.o printPermissions.o isHidden.o getFileInfo.o freeFileTree.o getFileCount.o nameCompare.o nameCompareRev.o timeCompare.o 
+
+Done. Generated executable: mylsEC

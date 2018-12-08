@@ -9,22 +9,17 @@
 #ifndef PA4EC_H
 #define PA4_H
 
-#define STR_USAGE_LONG \
-"Usage: %s [-aclrth] [-f file]\n"\
-"  -a --all \t show all files, including hidden files\n"\
-"  -c --count \t print file count, including hidden files\n"\
-"  -f --file \t [file] specify directory to list\n"\
-"  -l --long \t list files in long format\n"\
-"  -r --reverse \t sort files in reversed order\n"\
-"  -t --time \t sort files by time, instead of by name\n"\
-"  -h --help \t show the help message\n"
+#define EC_STR_USAGE \
+"Usage: %s [-aclrth] [filename(s)]...\n"\
+"  -a \t show all files, including hidden files\n"\
+"  -c \t print file count, including hidden files\n"\
+"  -l \t list files in long format\n"\
+"  -r \t sort files in reversed order\n"\
+"  -t \t sort files by time, instead of by name\n"\
+"  -h \t show the help message\n"
 
-#define FLAG_LONG_SHOWHIDDEN "all"
-#define FLAG_LONG_COUNT "count"
-#define FLAG_LONG_FILENAME "file"
-#define FLAG_LONG_LONGFMT "long"
-#define FLAG_LONG_REVERSE "reverse"
-#define FLAG_LONG_TIME "time"
-#define FLAG_LONG_HELP "help"
+#define EC_FLAGS "aclrth"
+
+#define EC_STR_COUNT "Total file count: %d.\n"
 
 #endif
