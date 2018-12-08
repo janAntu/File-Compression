@@ -1,0 +1,272 @@
+/*
+ * Filename: README
+ * Author: Richard Andrus
+ * Userid: cs30foy
+ * Description: Program Description and Questions for PA4
+ * Date: Dec 3, 2018
+ * Sources of Help: 
+ */
+
+DESCRIPTION
+
+This program, PA4, prints all files in a Linux directory in
+a manner similar to the ls command found in Linux. It provides
+several options to list these files in different ways, such
+as allowing the user to specify a directory, to include file
+details, to show hidden files, and to sort the files by time
+or by name.
+
+COMPILATION
+
+To compile PA4, there is a makefile in its directory which can
+automatically compile each of the files that make up each program
+into an executable file.
+
+To compile the program with make, use the following command in 
+a Linux terminal while in the ~/pa4 directory:
+
+    $ make
+
+RUNNING THE PROGRAM
+
+To run the create program from the terminal, type this:
+
+    $ ./myls
+
+followed by flags to specify the program's output. One flag, -h,
+prints out the instructions for using this program and will not
+print out the list of files. The -f flag specifies which directory
+to list, and thus must be followed by a valid directory name. The
+-a flag makes the program show all files, including hidden files.
+The -c flag makes the program display the file count before it
+prints out the files. The -l flag makes the program display the
+files in long format with details including permissions, file
+size, user and group, and the date and time the file was created.
+The -r flag makes the program print the files in reverse order,
+and the -t flag makes the program sort the files by time.
+
+NORMAL OUTPUT
+
+This is the output with no extra options:
+
+.
+ ./Makefile
+ ./README
+ ./avg4.s
+ ./findMax.c
+ ./initArray.c
+ ./pa0.c
+ ./pa0.h
+ ./pa0StarterFiles
+  ./pa0StarterFiles/Makefile
+  ./pa0StarterFiles/README
+  ./pa0StarterFiles/findMax.c
+  ./pa0StarterFiles/initArray.c
+  ./pa0StarterFiles/pa0.c
+  ./pa0StarterFiles/pa0.h
+  ./pa0StarterFiles/printEveryOtherReversed.c
+ ./printEveryOtherReversed.c
+ ./test1
+ ./test2
+
+This is the output with options -a, -c, -l, -r and -t (which
+naturally produces lines over 80 characters long):
+
+File count in ".": 111.
+drwxr-xr-x cs30foy  ieng6_cs30f  4096 Dec  7 16:33 .
+-rw-r--r-- cs30foy  ieng6_cs30f     0 Dec  7 16:33  ./output2
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:57  ./.git
+-rw-r----- cs30foy  ieng6_cs30f     6 Oct  8 23:57   ./.git/COMMIT_EDITMSG
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56   ./.git/refs
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56    ./.git/refs/remotes
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56     ./.git/refs/remotes/origin
+-rw-r----- cs30foy  ieng6_cs30f    41 Oct  8 23:56      ./.git/refs/remotes/origin/master
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:50    ./.git/refs/heads
+-rw-r--r-- cs30foy  ieng6_cs30f    41 Oct  8 23:50     ./.git/refs/heads/master
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:44    ./.git/refs/tags
+-rw-r----- cs30foy  ieng6_cs30f   266 Oct  8 23:56   ./.git/config
+-rw-r----- cs30foy  ieng6_cs30f  1490 Oct  8 23:55   ./.git/index
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:45   ./.git/logs
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56    ./.git/logs/refs
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56     ./.git/logs/refs/remotes
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 23:56      ./.git/logs/refs/remotes/origin
+-rw-r----- cs30foy  ieng6_cs30f   148 Oct  8 23:56       ./.git/logs/refs/remotes/origin/master
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:45     ./.git/logs/refs/heads
+-rw-r----- cs30foy  ieng6_cs30f   619 Oct  8 23:50      ./.git/logs/refs/heads/master
+-rw-r----- cs30foy  ieng6_cs30f   619 Oct  8 23:50    ./.git/logs/HEAD
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:44   ./.git/branches
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:44   ./.git/hooks
+-rwxr-x--- cs30foy  ieng6_cs30f  1348 Oct  8 14:44    ./.git/hooks/pre-push.sample
+-rwxr-x--- cs30foy  ieng6_cs30f   189 Oct  8 14:44    ./.git/hooks/post-update.sample
+-rwxr-x--- cs30foy  ieng6_cs30f  3611 Oct  8 14:44    ./.git/hooks/update.sample
+-rwxr-x--- cs30foy  ieng6_cs30f  1642 Oct  8 14:44    ./.git/hooks/pre-commit.sample
+-rwxr-x--- cs30foy  ieng6_cs30f  1239 Oct  8 14:44    ./.git/hooks/prepare-commit-msg.sample
+-rwxr-x--- cs30foy  ieng6_cs30f  4951 Oct  8 14:44    ./.git/hooks/pre-rebase.sample
+-rwxr-x--- cs30foy  ieng6_cs30f   478 Oct  8 14:44    ./.git/hooks/applypatch-msg.sample
+-rwxr-x--- cs30foy  ieng6_cs30f   424 Oct  8 14:44    ./.git/hooks/pre-applypatch.sample
+-rwxr-x--- cs30foy  ieng6_cs30f   896 Oct  8 14:44    ./.git/hooks/commit-msg.sample
+-rw-r----- cs30foy  ieng6_cs30f    73 Oct  8 14:44   ./.git/description
+drwxr-x--- cs30foy  ieng6_cs30f  4096 Oct  8 14:44   ./.git/info
+-rw-r----- cs30foy  ieng6_cs30f   240 Oct  8 14:44    ./.git/info/exclude
+-rw-r----- cs30foy  ieng6_cs30f    23 Oct  8 14:44   ./.git/HEAD
+-rwxr--r-- cs30foy  ieng6_cs30f  3170 Oct  8 23:50  ./README
+-rw-r--r-- cs30foy  ieng6_cs30f   179 Oct  8 18:48  ./test2
+-rw-r--r-- cs30foy  ieng6_cs30f   179 Oct  8 18:48  ./test1
+-rwxr--r-- cs30foy  ieng6_cs30f  1936 Oct  8 18:48  ./pa0.c
+-rwxr--r-- cs30foy  ieng6_cs30f   830 Oct  8 18:46  ./printEveryOtherReversed.c
+-rw-r--r-- cs30foy  ieng6_cs30f  1846 Oct  8 18:40  ./avg4.s
+-rwxr--r-- cs30foy  ieng6_cs30f   687 Oct  8 18:34  ./pa0.h
+-rwxr--r-- cs30foy  ieng6_cs30f   733 Oct  8 18:21  ./initArray.c
+-rwxr--r-- cs30foy  ieng6_cs30f   719 Oct  8 14:53  ./findMax.c
+-rw-r----- cs30foy  ieng6_cs30f    35 Oct  8 14:47  ./.gitignore
+-rwxr--r-- cs30foy  ieng6_cs30f  1020 Oct  2 18:30  ./Makefile
+drwxr-xr-x cs30foy  ieng6_cs30f  4096 Oct  2 18:26  ./pa0StarterFiles
+-rwxr--r-- cs30foy  ieng6_cs30f   904 Oct  2 18:28   ./pa0StarterFiles/initArray.c
+-rwxr--r-- cs30foy  ieng6_cs30f  1020 Oct  2 18:28   ./pa0StarterFiles/Makefile
+-rwxr--r-- cs30foy  ieng6_cs30f  1009 Oct  2 18:28   ./pa0StarterFiles/printEveryOtherReversed.c
+-rwxr--r-- cs30foy  ieng6_cs30f   866 Oct  2 18:28   ./pa0StarterFiles/pa0.h
+-rwxr--r-- cs30foy  ieng6_cs30f     0 Oct  2 18:28   ./pa0StarterFiles/README
+-rwxr--r-- cs30foy  ieng6_cs30f   911 Oct  2 18:28   ./pa0StarterFiles/findMax.c
+-rwxr--r-- cs30foy  ieng6_cs30f  2117 Oct  2 18:28   ./pa0StarterFiles/pa0.c
+
+
+ABNORMAL OUTPUT
+
+Along with this normal intended output, the program also produces
+several types of abnormal output to respond to error in either the
+user input or in the program operation. These include:
+
+PROGRAM TESTING
+
+I used a couple different methods to test the different functions
+in this program. For several of the files, I created unit testing
+modules for each file of code to run the code through different
+scenarios and compare its output or results with the correct 
+results. These were especially useful for the assembly files like
+nameCompare.s and timeCompare.s where the results are formualic
+and where the lower-level syntax of the code makes other forms
+of debugging more difficult. I also made a test module called
+testMilestone to test the printPermissions and buildFileTree
+programs together before I started the rest of the program.
+
+To create these unit testing modules, I used a variety of scenarios
+that were intended to cause errors in the code. For example, passing
+alphabetic strings to functions expecting integer input, passing
+null values to pointers, passing incorrectly formatted strings as input,
+and passing values out of range all caused my programs to report
+errors instead of continuing with execution. However, I did not do
+this with the file input because testing that each file and each
+directory of files was formatted correctly would have been an
+unnecessary amount of effort when the program will be used on the
+same set of files provided to us.
+
+Along with this, I used the Linux "diff" command to compare my code's
+results with the output from the reference solution by redirecting my
+program output to a text file and doing the same with the
+public executable that Professor Cao provided. This was useful for
+both the short and long versions of the myls output, because diff
+saved me a great deal of time by locating mistakes automatically. I
+also used this method to compare my error output with the correct
+error output of the reference solution.
+
+MACHINE INSTRUCTION TRANSLATIONS:
+
+Translation #1: add fp, sp, 4 -> 0xE28DB004
+E (1110): Conditional code to always execute
+2 (0010-: OP code is 00 for a data processing instruction, I bit
+8  1000): is 1 to add a numerical value, function code 0100 indicates
+          add command and S is zero to not change the sign bit.
+D (1101): Sets sp (r13) as source register
+B (1011): Sets fp (r11) as destination register
+0 (0000): Rot is zero because the value can be used as is
+0 (0000): (First bit of imm8)
+4 (0100): Value to be added to register is 4.
+
+Translation #2: str r0, [fp, -8] -> 0xE50B0008
+E (1110): Conditional code to always execute
+5 (0101-: OP code is 01 for a memory instruction, I bit is 0
+0  0000): to use a numerical offset, P bit and W bit are 1 and 0
+          for an offset index, U bit is 0 to subtract offset
+          from base, and L and B bits are 0 and 0 for STR.
+B (1011): Sets fp (r11) as source register
+0 (0000): Sets r0 as destination register
+0 (0000): \
+0 (0000):   Offset equals 8
+8 (1000): / 
+
+Translation #3: ldr r0, [fp, -8] -> 0xE51B0008
+E (1110): Conditional code to always execute
+5 (0101-: OP code is 01 for a memory instruction, I bit is 0
+1  0001): to use a numerical offset, P bit and W bit are 1 and 0
+          for an offset index, U bit is 0 to subtract offset
+          from base, and L and B bits are 1 and 0 for LDR.
+B (1011): Sets fp (r11) as source register
+0 (0000): Sets r0 as destination register
+0 (0000): \
+0 (0000):   Offset equals 8
+8 (1000): / 
+
+Translation #4: bge else_if -> 0xAA000001
+A (1010): Conditional code to execute if greater than or equal 
+A (0010): OP code is 10 for a branching instruction, L bit is
+          0 to not link while branching.
+0 (0000): \
+0 (0000):   The destination of this branch is three lines
+0 (0000):   after it in the program and the program counter
+0 (0000):   is always two lines ahead of the current instruction,
+0 (0000):   so add 3 - 2 = 1 to the program counter.
+1 (0001): /
+
+Translation #5: ble else -> 0xDA000001
+D (1101): Conditional code to execute if less than or equal 
+A (0010): OP code is 10 for a branching instruction, L bit is
+          0 to not link while branching.
+0 (0000): \
+0 (0000):   The destination of this branch is three lines
+0 (0000):   after it in the program and the program counter
+0 (0000):   is always two lines ahead of the current instruction,
+0 (0000):   so add 3 - 2 = 1 to the program counter.
+1 (0001): /
+
+Translation #6: sub sp, fp, 4 -> 0xE24BD004
+E (1110): Conditional code to always execute
+2 (0010-: OP code is 00 for a data processing instruction, I bit
+4  0100): is 1 to subtract a numerical value, function code 0010 for
+          subtract command and S is zero to not change the sign bit.
+B (1011): Sets fp (r11) as source register
+D (1101): Sets sp (r13) as destination register
+0 (0000): Rot is zero because the value can be used as is
+0 (0000): (First bit of imm8)
+4 (0100): Value to be added to register is 4.
+
+
+BUFFER OVERFLOW EXPLOIT:
+1: 
+           -------------------------------------
+           | buf[0] | buf[1] | buf[2] | buf[3] |
+           | buf[4] | buf[5] | buf[6] | buf[7] |
+           | buf[8] | buf[9] | buf[10]| buf[11]|
+           | buf[12]| buf[13]| buf[14]| buf[15]|
+           | buf[16]| buf[17]| buf[18]| buf[19]|
+           |            ptrToIsHidden          |
+           |                 fp                |
+           |                 lr                |
+           -------------------------------------
+
+2: This string would need to be at least 21 bytes long to overflow.
+
+3: Yes, ptrToIsHidden would also be affected. If the buffer
+   overflows, then the next four bytes would be written to
+   ptrToIsHidden in little-endian byte order.
+
+4: 0x00011cdc
+
+5: "\xdc\x1c\x01\x00"
+
+6: "AAAAAAAAAAAAAAAAAAAA\xdc\xc1\x01\x00"
+
+7: Secret() prints this sweet animation of a train rolling by,
+   saying good job for finishing up CSE 30 this quarter :D
+
+8: Replace strcpy() with strncpy() with VULNERABILITY_BUFSIZE as
+   the third argument.

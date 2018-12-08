@@ -2,7 +2,7 @@
  * Filename: printPermissions.c
  * Author: Richard Andrus
  * Userid: cs30foy
- * Description: Read contents of hash tables from a file
+ * Description: Print file permissions for a file
  * Date: Nov 22 2018
  * Sources of Help: tutorialspoint.com
  */
@@ -10,11 +10,11 @@
 /*
  * Function Name: printPermissions()
  * Function Prototype: void printPermissions(const mode_t mode);
- * Description: Prints file permissions (read, write, execute)
+ * Description: Print file permissions for a file
  * Parameters: mode - A bitfield representing access permissions
- * Side Effects: Prints out to stdout
- * Error Conditions: exe
- * Return Value: exe
+ * Side Effects: Prints to stdout
+ * Error Conditions: None
+ * Return Value: None
  *
  */
 
