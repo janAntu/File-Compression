@@ -1,4 +1,31 @@
-Extra argument 1 detected
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+./myls: invalid option -- 'z'
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+./myls: option requires an argument -- 'f'
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+File/directory "notafile" does not exist.
+Extra argument arg detected
 Usage: ./myls [-aclrth] [-f file]
   -a 	 show all files, including hidden files
   -c 	 print file count, including hidden files

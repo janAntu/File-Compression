@@ -30,6 +30,9 @@
 
 #define WKDAY_OFF 4
 #define TIME_LEN 12
+#define SPACE " "
+#define NULLTERM '\0'
+#define NEWLINE "\n"
 
 void printFiles (const struct fileInfo * fi, 
                  int showHidden, int longFormat, int indent) { 
@@ -48,7 +51,7 @@ void printFiles (const struct fileInfo * fi,
     printPermissions(fi->mode);
 
     // Print space after file permissions
-    printf(" ");
+    printf(SPACE);
 
     // Print User ID
     printf(STR_PWNAME, getpwuid(fi->uid)->pw_name);
@@ -62,21 +65,22 @@ void printFiles (const struct fileInfo * fi,
     // Print month, date and time ALL AT ONCE
     char *timeStr = ctime(&fi->time);
     timeStr += WKDAY_OFF;
-    timeStr[TIME_LEN] = '\0';
-    printf("%s ", timeStr);
-    
+    timeStr[TIME_LEN] = NULLTERM;
+    printf(timeStr);
+    printf(SPACE);
   } 
 
   // Print spaces before file
   for (int i = 0; i < indent; i++) {
 
-    printf(" ");
+    printf(SPACE);
 
   }
 
 
   // Print file name
-  printf("%s\n", fi->filename);
+  printf(fi->filename);
+  printf(NEWLINE);
 
   // Go through all the children is this file
   for (int i = 0; i < fi->childrenSize; i++) {

@@ -54,34 +54,42 @@ int main( int argc, char *argv[] ) {
   
     switch (opt) {
 
+      // For help flag, print usage and exit
       case FLAG_HELP:
         fprintf(stderr, STR_USAGE, argv[0]);
         return EXIT_SUCCESS;
 
+      // For hidden flag, set allFlag to true
       case FLAG_SHOWHIDDEN:
         allFlag = TRUE;
         break;
 
+      // For count flag, set countFlag to true
       case FLAG_COUNT:
         countFlag = TRUE;
         break;
 
+      // For long flag, set longFlag to true
       case FLAG_LONGFMT:
         longFlag = TRUE;
         break;
 
+      // For reverse flag, set rev to true
       case FLAG_REVERSE:
         rev = TRUE;
         break;
 
+      // For time flag, set sortby to TIME
       case FLAG_TIME:
         sortby = TIME;
         break;
 
+      // For filename flag, replace default path to arg
       case FLAG_FILENAME:
         strcpy(directory, optarg);
         break;
 
+      // If user sets an incorrect flag, print error and exit
       case FLAG_UNKNOWN:
         fprintf(stderr, STR_USAGE, argv[0]);
         return EXIT_FAILURE;

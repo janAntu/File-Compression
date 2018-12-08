@@ -48,6 +48,7 @@ and the -t flag makes the program sort the files by time.
 NORMAL OUTPUT
 
 This is the output with no extra options:
+(Printed out to stdout)
 
 .
  ./Makefile
@@ -135,6 +136,55 @@ ABNORMAL OUTPUT
 Along with this normal intended output, the program also produces
 several types of abnormal output to respond to error in either the
 user input or in the program operation. These include:
+
+[ Standard usage message for -h flag - stderr]
+
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+
+[ Error for invalid flag - stderr ]  
+./myls: invalid option -- 'z'
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+
+[ Error for -f flag without filepath - stderr ]  
+./myls: option requires an argument -- 'f'
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
+
+[ Error for invalid filepath - stderr ]
+
+File/directory "notafile" does not exist.
+
+[ Error for extra argument - stderr ]
+
+Extra argument arg detected
+Usage: ./myls [-aclrth] [-f file]
+  -a 	 show all files, including hidden files
+  -c 	 print file count, including hidden files
+  -f 	 [file] specify directory to list
+  -l 	 list files in long format
+  -r 	 sort files in reversed order
+  -t 	 sort files by time, instead of by name
+  -h 	 show the help message
 
 PROGRAM TESTING
 

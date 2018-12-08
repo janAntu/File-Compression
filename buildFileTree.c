@@ -16,7 +16,7 @@
  *             sortby - Criteria to sort the files, either name or date
  *             rev - Tells whether to sort in reverse order
  * Side Effects: Allocates memory on the heap
- * Error Conditions: 
+ * Error Conditions: If malloc fails, return early
  * Return Value: Pointer to dynamically allocated struct fileInfo
  *
  */
@@ -147,6 +147,7 @@ struct fileInfo *buildFileTree(
 
       }
 
+    // If sorting by time, use timeCompare or timeCompareRev
     } else if (rev == TRUE) {
 
       sort = timeCompareRev;

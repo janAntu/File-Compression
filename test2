@@ -1,9 +1,1 @@
-Extra argument 1 detected
-Usage: /home/linux/ieng6/cs30f/cs30foy/../public/pa4test [-aclrth] [-f file]
-  -a 	 show all files, including hidden files
-  -c 	 print file count, including hidden files
-  -f 	 [file] specify directory to list
-  -l 	 list files in long format
-  -r 	 sort files in reversed order
-  -t 	 sort files by time, instead of by name
-  -h 	 show the help message
+File/directory "notafile" does not exist.
